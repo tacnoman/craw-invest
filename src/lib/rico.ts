@@ -20,7 +20,7 @@ export class RicoCrawler {
 
   async buildBrowser() {
     this.browser = await chromium.launch({
-      devtools: true,
+      devtools: process.env.DEVTOOLS === '1',
       headless: false,
     });
 
