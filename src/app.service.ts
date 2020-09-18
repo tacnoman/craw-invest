@@ -38,7 +38,7 @@ export class AppService {
     for(let i = 0; i < stocks.length; i++) {
       const currentStock = stocks[i];
       const stockName = currentStock.symbol;
-      const value = currentStock.currentUnitValue * currentStock.currentSellQuantity;
+      const value = currentStock.currentUnitValue * currentStock.currentBuyQuantity;
 
       console.log('Stock: ', stockName, ' - Value: ', value);
       await sheet.setStock(stockName, value);
