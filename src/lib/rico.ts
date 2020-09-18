@@ -20,8 +20,8 @@ export class RicoCrawler {
 
   async buildBrowser() {
     this.browser = await chromium.launch({
-      devtools: process.env.DEVTOOLS !== '1',
-      headless: process.env.DEVTOOLS !== '1',
+      devtools: process.env.DEVTOOLS === '1',
+      headless: process.env.HEADLESS === '1',
     });
 
     this.context = await this.browser.newContext();
@@ -32,7 +32,7 @@ export class RicoCrawler {
     await this.page.goto('https://www.rico.com.vc/login/');
     await wait(1000);
 
-    await this.page.fill("[placeholder=\"Usuário\"]", this.username);
+    await this.page.fill("input.color-dove-grey", this.username);
     await this.page.click('text=Avançar');
     await wait(1000);
     await this.context.grantPermissions(['geolocation']);
