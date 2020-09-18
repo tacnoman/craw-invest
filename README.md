@@ -1,3 +1,9 @@
 # Request
 
-`curl http://localhost:3000?username=<username>&password=<password>`
+```
+$ cp .env.dist .env
+
+// Set the environment variables
+
+$ yarn cli:dev stocks
+```
