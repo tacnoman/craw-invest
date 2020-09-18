@@ -1,13 +1,13 @@
-import { chromium } from 'playwright';
+import { chromium, ChromiumBrowser, ChromiumBrowserContext, Page } from 'playwright';
 
 const wait = async (interval) => {
   await new Promise(resolve => setTimeout(resolve, interval));
 }
 
 export class RicoCrawler {
-  browser: any
-  context: any
-  page: any
+  browser: ChromiumBrowser
+  context: ChromiumBrowserContext
+  page: Page
   username: string
   password: string
   // Values
@@ -21,14 +21,17 @@ export class RicoCrawler {
   async buildBrowser() {
     this.browser = await chromium.launch({
       devtools: process.env.DEVTOOLS === '1',
-      headless: process.env.HEADLESS === '1',
+      headless: false, // If false show the browser
     });
 
     this.context = await this.browser.newContext();
+    console.log('Context created');
     this.page = await this.context.newPage();
+    console.log('Page created');
   }
 
   async login() {
+    console.log('Opening RICO');
     await this.page.goto('https://www.rico.com.vc/login/');
     await wait(1000);
 
@@ -77,6 +80,7 @@ export class RicoCrawler {
     const balanceNetwork = await this.page.waitForResponse('**/summary-position/');
     const summaryPositions = await balanceNetwork.json();
 
+    // @ts-ignore
     this.cashPositionbalance = summaryPositions.positions[0].grossValue;
 
     try{

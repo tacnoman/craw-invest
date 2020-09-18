@@ -31,6 +31,10 @@ export class AppService {
     await sheet.load();
     await sheet.buildDays();
 
+    if (!Array.isArray(stocks)) {
+      return;
+    }
+
     for(let i = 0; i < stocks.length; i++) {
       const currentStock = stocks[i];
       const stockName = currentStock.symbol;
